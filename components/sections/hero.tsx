@@ -1,124 +1,193 @@
 "use client";
 
+import { useRef } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Container } from "@/components/ui/container";
 import { metrics } from "@/lib/data";
 
 export function Hero() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"]
+  });
+
+  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0.3]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.95]);
+
   return (
-    <section className="relative overflow-hidden pt-6">
-      <Container>
-        <div className="relative overflow-hidden rounded-[2.5rem] border border-white/10 bg-hero-grid shadow-luxe">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(95,125,255,0.22),transparent_28%),linear-gradient(120deg,rgba(4,7,18,0.92),rgba(5,8,22,0.64))]" />
-          <div className="absolute inset-y-0 right-0 hidden w-1/2 bg-gradient-to-l from-black/20 via-transparent to-transparent lg:block" />
-          <div className="relative grid min-h-[760px] gap-10 px-6 py-8 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:px-10 lg:py-10">
-            <div className="flex flex-col justify-between">
-              <div>
-                <div className="inline-flex items-center gap-3 rounded-full border border-white/12 bg-white/8 px-4 py-2 text-xs uppercase tracking-[0.3em] text-muted backdrop-blur-xl">
-                  <span className="h-2 w-2 rounded-full bg-emerald" />
-                  Luxury property advisory
-                </div>
-                <motion.h1
-                  initial={{ opacity: 0, y: 22 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                  className="mt-8 max-w-3xl text-5xl font-semibold leading-[0.95] tracking-[-0.06em] text-text sm:text-6xl lg:text-7xl"
-                >
-                  Find Your Dream Property.
-                </motion.h1>
-                <motion.p
-                  initial={{ opacity: 0, y: 24 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-                  className="mt-8 max-w-2xl text-base leading-8 text-muted sm:text-lg"
-                >
-                  Discover exceptional residences through a premium advisory experience built for
-                  buyers who value discretion, speed, and beautifully curated opportunities in the
-                  world’s most desirable addresses.
-                </motion.p>
-                <motion.div
-                  initial={{ opacity: 0, y: 28 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.75, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
-                  className="mt-10 flex flex-col gap-4 sm:flex-row"
-                >
-                  <a
-                    href="#contact"
-                    className="inline-flex min-h-14 items-center justify-center rounded-full bg-white px-7 text-sm font-semibold uppercase tracking-[0.18em] text-canvas transition hover:scale-[1.01] hover:bg-emerald hover:text-canvas"
-                  >
-                    Schedule Viewing
-                  </a>
-                  <a
-                    href="#properties"
-                    className="inline-flex min-h-14 items-center justify-center rounded-full border border-white/12 bg-white/8 px-7 text-sm font-semibold uppercase tracking-[0.18em] text-text backdrop-blur-xl transition hover:border-white/20 hover:bg-white/12"
-                  >
-                    Explore Properties
-                  </a>
-                </motion.div>
-              </div>
+    <section ref={sectionRef} className="relative overflow-hidden pt-0 sm:pt-4">
+      {/* Parallax Background Image */}
+      <motion.div
+        style={{ y: imageY, opacity, scale }}
+        className="absolute inset-0 -top-20 -bottom-20 -left-10 -right-10"
+      >
+        <Image
+          src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=2000&q=85"
+          alt="Luxury property background"
+          fill
+          priority
+          className="object-cover"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-canvas/85 via-canvas/60 to-canvas" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,rgba(155,109,255,0.12),transparent_50%),radial-gradient(circle_at_80%_70%,rgba(47,208,161,0.08),transparent_40%)]" />
+      </motion.div>
 
-              <div className="mt-12 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-                {metrics.map((metric) => (
-                  <div
-                    key={metric.label}
-                    className="rounded-[1.75rem] border border-white/10 bg-black/18 p-5 backdrop-blur-md"
-                  >
-                    <p className="text-3xl font-semibold tracking-[-0.04em] text-text">
-                      {metric.value}
-                    </p>
-                    <p className="mt-2 text-sm uppercase tracking-[0.22em] text-muted">
-                      {metric.label}
-                    </p>
-                  </div>
-                ))}
-              </div>
+      <Container className="relative z-10 pt-20 sm:pt-24 lg:pt-28">
+        <div className="relative">
+          {/* Top badge */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="inline-flex items-center gap-3 rounded-full border border-white/12 bg-white/8 px-5 py-2.5 text-[11px] uppercase tracking-[0.3em] text-muted backdrop-blur-xl"
+          >
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald" />
+            </span>
+            Luxury property advisory &mdash; NYC&apos;s finest residences
+          </motion.div>
+
+          {/* Main heading */}
+          <motion.div className="mt-10 max-w-4xl">
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              className="heading-xl font-semibold"
+            >
+              <span className="gradient-text-plum">Discover</span> Your
+              <br />
+              <span className="gradient-text-gold">Dream Property</span>
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              className="mt-8 max-w-2xl text-base leading-8 text-muted sm:text-lg sm:leading-9"
+            >
+              Discover exceptional residences through a premium advisory experience built for
+              buyers who value discretion, speed, and beautifully curated opportunities in the
+              world&apos;s most desirable addresses.
+            </motion.p>
+          </motion.div>
+
+          {/* CTA Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 28 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.75, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-10 flex flex-col gap-4 sm:flex-row"
+          >
+            <a
+              href="#contact"
+              className="group relative inline-flex min-h-14 items-center justify-center overflow-hidden rounded-full px-8 text-sm font-semibold uppercase tracking-[0.18em] text-white transition-all duration-300 hover:scale-[1.02]"
+            >
+              <span className="absolute inset-0 bg-gradient-to-r from-royal via-plum to-emerald" />
+              <span className="absolute inset-0 bg-gradient-to-r from-royal to-plum opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <span className="relative z-10">Schedule Viewing</span>
+              <span className="relative z-10 ml-2">&rarr;</span>
+            </a>
+            <a
+              href="#properties"
+              className="group inline-flex min-h-14 items-center justify-center rounded-full border border-white/15 bg-white/8 px-8 text-sm font-semibold uppercase tracking-[0.18em] text-text backdrop-blur-xl transition-all duration-300 hover:border-white/25 hover:bg-white/12 hover:scale-[1.01]"
+            >
+              Explore Properties
+              <span className="ml-2 text-muted transition-transform duration-300 group-hover:translate-x-1">&rarr;</span>
+            </a>
+          </motion.div>
+
+          {/* Trust badges row */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.8 }}
+            className="mt-12 flex flex-wrap items-center gap-6"
+          >
+            <div className="flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-4 py-2 backdrop-blur-xl">
+              <div className="flex text-gold text-sm tracking-wider">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <span className="text-xs text-muted">500+ Google Reviews</span>
             </div>
-
-            <div className="relative flex items-end">
-              <div className="absolute left-5 top-6 z-10 max-w-[220px] rounded-[1.75rem] border border-white/10 bg-white/10 p-4 shadow-glass backdrop-blur-xl">
-                <p className="text-xs uppercase tracking-[0.28em] text-muted">★★★★★ Reviews</p>
-                <p className="mt-3 text-sm leading-7 text-text">
-                  Trusted by private buyers, investors, and relocation clients seeking a more
-                  refined purchase experience.
-                </p>
+            <div className="flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-4 py-2 backdrop-blur-xl">
+              <div className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald/20">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#2fd0a1" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
               </div>
+              <span className="text-xs text-muted">BBB Accredited A+</span>
+            </div>
+            <div className="flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-4 py-2 backdrop-blur-xl">
+              <div className="flex h-5 w-5 items-center justify-center rounded-full bg-plum/20">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#9b6dff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 2v20M2 12h20" />
+                </svg>
+              </div>
+              <span className="text-xs text-muted">18+ Years Experience</span>
+            </div>
+          </motion.div>
 
+          {/* Stats Grid */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
+          >
+            {metrics.map((metric, i) => (
               <motion.div
-                initial={{ opacity: 0, scale: 0.96 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-                className="relative h-[520px] w-full overflow-hidden rounded-[2.25rem] border border-white/10"
+                key={metric.label}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 1.1 + i * 0.1 }}
+                className="group relative rounded-[1.75rem] border border-white/10 bg-gradient-to-b from-white/8 to-white/[0.02] p-5 backdrop-blur-md transition-all duration-300 hover:border-white/20 hover:bg-white/10"
               >
-                <Image
-                  src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1400&q=80"
-                  alt="Luxury modern property exterior"
-                  fill
-                  priority
-                  className="object-cover"
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-canvas via-transparent to-transparent" />
-                <div className="absolute bottom-5 left-5 right-5 rounded-[1.75rem] border border-white/10 bg-black/25 p-5 backdrop-blur-xl">
-                  <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                    <div>
-                      <p className="text-xs uppercase tracking-[0.28em] text-muted">
-                        Featured residence
-                      </p>
-                      <p className="mt-2 text-2xl font-semibold tracking-[-0.03em] text-text">
-                        Waterfront glass estate with panoramic skyline views
-                      </p>
-                    </div>
-                    <div className="rounded-full border border-white/10 bg-white/8 px-4 py-3 text-sm text-text">
-                      Private viewing slots available this week
-                    </div>
-                  </div>
-                </div>
+                <div className="absolute inset-0 rounded-[1.75rem] bg-gradient-to-b from-plum/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <p className="relative z-10 text-3xl font-semibold tracking-[-0.04em] gradient-text-gold">
+                  {metric.value}
+                </p>
+                <p className="relative z-10 mt-2 text-sm uppercase tracking-[0.22em] text-muted/70">
+                  {metric.label}
+                </p>
               </motion.div>
-            </div>
-          </div>
+            ))}
+          </motion.div>
         </div>
       </Container>
+
+      {/* Floating decorative elements */}
+      <motion.div
+        animate={{
+          y: [0, -15, 0],
+          rotate: [0, 3, 0]
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+        className="pointer-events-none absolute right-[10%] top-[25%] z-10 hidden lg:block"
+      >
+        <div className="h-64 w-64 rounded-full border border-white/5 bg-gradient-to-br from-plum/10 to-emerald/5 blur-3xl" />
+      </motion.div>
+
+      <motion.div
+        animate={{
+          y: [0, 10, 0],
+          opacity: [0.3, 0.6, 0.3]
+        }}
+        transition={{
+          duration: 6,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+        className="pointer-events-none absolute left-[5%] top-[60%] z-10 hidden lg:block"
+      >
+        <div className="h-48 w-48 rounded-full bg-gradient-to-br from-royal/10 to-transparent blur-3xl" />
+      </motion.div>
     </section>
   );
 }
