@@ -23,6 +23,22 @@ npm run build
 npm run start
 ```
 
+## GitHub Pages deployment
+
+```bash
+npm run deploy
+```
+
+This project is configured for static export with Next.js, so the generated site will be written to the `out` folder.
+
+To publish with GitHub Pages:
+
+1. Push this project to a GitHub repository.
+2. Make sure the default branch is `main`.
+3. In the repository settings, open `Pages`.
+4. Set the source to `GitHub Actions`.
+5. Push to `main` and the workflow in `.github/workflows/deploy-github-pages.yml` will deploy automatically.
+
 ## Notes
 
 - The floating vertical `Made by BuzzleMax` badge is persistent across the site.
