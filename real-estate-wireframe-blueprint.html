@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BuzzleMax | Real Estate Landing Page Wireframe</title>
+  <style>
+    :root{
+      --bg:#f5f5f2;
+      --surface:#ffffff;
+      --surface-2:#f0f0eb;
+      --line:#d9d9d2;
+      --line-strong:#a8a89e;
+      --text:#151515;
+      --muted:#62625a;
+      --accent:#111111;
+      --tag:#ffffffd8;
+      --shadow:0 18px 60px rgba(17,17,17,.08);
+      --radius-xl:28px;
+      --radius-lg:22px;
+      --radius-md:16px;
+      --radius-sm:12px;
+      --max:1240px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter, "Segoe UI", Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,.85), transparent 28%),
+        linear-gradient(180deg, #fafaf7 0%, #f2f2ee 100%);
+      color:var(--text);
+    }
+
+    .floating-brand-layer{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:30;
+      overflow:hidden;
+    }
+
+    .floating-brand-layer span{
+      position:absolute;
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:7px 11px;
+      border-radius:999px;
+      border:1px solid rgba(17,17,17,.1);
+      background:var(--tag);
+      backdrop-filter:blur(8px);
+      font-size:11px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color:#3e3e38;
+      box-shadow:0 10px 30px rgba(17,17,17,.08);
+      animation:drift linear infinite;
+      white-space:nowrap;
+    }
+
+    .floating-brand-layer span::before{
+      content:"•";
+      font-size:10px;
+    }
+
+    @keyframes drift{
+      0%{transform:translate3d(0,0,0)}
+      25%{transform:translate3d(18px,-12px,0)}
+      50%{transform:translate3d(-10px,18px,0)}
+      75%{transform:translate3d(14px,8px,0)}
+      100%{transform:translate3d(0,0,0)}
+    }
+
+    .page{
+      position:relative;
+      z-index:1;
+      width:min(calc(100% - 32px), var(--max));
+      margin:0 auto;
+      padding:28px 0 80px;
+    }
+
+    .topbar,
+    .panel,
+    .wire-card,
+    .note,
+    .footer-grid > div{
+      background:rgba(255,255,255,.88);
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(12px);
+    }
+
+    .topbar{
+      position:sticky;
+      top:14px;
+      z-index:20;
+      border-radius:999px;
+      padding:14px 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      margin-bottom:24px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      min-width:0;
+    }
+
+    .brand-mark{
+      width:42px;
+      height:42px;
+      border-radius:14px;
+      border:1px solid var(--line-strong);
+      display:grid;
+      place-items:center;
+      font-weight:700;
+      font-size:12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      background:linear-gradient(145deg,#fff,#ecece6);
+    }
+
+    .brand-copy strong,
+    .eyebrow strong{
+      display:block;
+      font-size:14px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+
+    .brand-copy span,
+    .eyebrow span,
+    .muted{
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.5;
+    }
+
+    .nav{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      justify-content:flex-end;
+    }
+
+    .chip,
+    .ghost-chip{
+      border-radius:999px;
+      padding:10px 14px;
+      font-size:12px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      border:1px solid var(--line);
+      background:var(--surface);
+    }
+
+    .ghost-chip{background:transparent}
+
+    .hero{
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:22px;
+      margin-bottom:22px;
+    }
+
+    .panel{
+      border-radius:var(--radius-xl);
+      padding:26px;
+    }
+
+    .hero-copy h1{
+      margin:18px 0 16px;
+      font-size:clamp(40px, 6vw, 76px);
+      line-height:.95;
+      letter-spacing:-.05em;
+      max-width:12ch;
+    }
+
+    .hero-copy p{
+      margin:0 0 22px;
+      max-width:58ch;
+      font-size:16px;
+      color:var(--muted);
+      line-height:1.7;
+    }
+
+    .cta-row,
+    .micro-proof,
+    .wire-grid,
+    .assistant-actions,
+    .footer-grid{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      border:none;
+      background:var(--accent);
+      color:#fff;
+      border-radius:999px;
+      padding:14px 18px;
+      font-weight:600;
+      font-size:14px;
+      letter-spacing:.01em;
+    }
+
+    .btn.secondary{
+      background:#fff;
+      color:var(--text);
+      border:1px solid var(--line);
+    }
+
+    .micro-proof{
+      margin-top:18px;
+    }
+
+    .micro-proof .ghost-chip{
+      background:#fbfbf8;
+    }
+
+    .wire-stack{
+      display:grid;
+      gap:16px;
+    }
+
+    .assistant-shell{
+      padding:18px;
+      border-radius:24px;
+      border:1px solid var(--line);
+      background:linear-gradient(180deg,#fff 0%, #f5f5ef 100%);
+    }
+
+    .assistant-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      margin-bottom:14px;
+    }
+
+    .assistant-title{
+      font-size:15px;
+      font-weight:700;
+    }
+
+    .status{
+      padding:7px 10px;
+      border-radius:999px;
+      background:#f3f3ed;
+      border:1px solid var(--line);
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.1em;
+    }
+
+    .chat-bubble,
+    .input-box,
+    .mini-card,
+    .wire-card{
+      border:1px dashed var(--line-strong);
+      background:#fff;
+      border-radius:18px;
+    }
+
+    .chat-bubble{
+      padding:14px;
+      margin-bottom:10px;
+      font-size:14px;
+      line-height:1.55;
+    }
+
+    .chat-bubble.agent{
+      background:#f7f7f2;
+    }
+
+    .assistant-actions .mini-card{
+      padding:10px 12px;
+      font-size:12px;
+      flex:1 1 130px;
+    }
+
+    .input-box{
+      padding:14px;
+      margin-top:12px;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .proof-band{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:14px;
+      margin-bottom:22px;
+    }
+
+    .wire-card{
+      padding:18px;
+      border-radius:22px;
+      min-height:120px;
+    }
+
+    .wire-card strong{
+      display:block;
+      margin-bottom:10px;
+      font-size:14px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+    }
+
+    .wire-card p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.6;
+      font-size:14px;
+    }
+
+    .section{
+      display:grid;
+      grid-template-columns:.28fr .72fr;
+      gap:22px;
+      margin-bottom:22px;
+    }
+
+    .note{
+      border-radius:24px;
+      padding:22px;
+      align-self:start;
+      position:sticky;
+      top:98px;
+    }
+
+    .note h2{
+      margin:10px 0 12px;
+      font-size:18px;
+      letter-spacing:-.03em;
+    }
+
+    .note p{
+      margin:0 0 14px;
+      color:var(--muted);
+      line-height:1.65;
+      font-size:14px;
+    }
+
+    .note ul{
+      margin:0;
+      padding-left:18px;
+      color:var(--muted);
+      display:grid;
+      gap:8px;
+      font-size:14px;
+      line-height:1.5;
+    }
+
+    .content-grid{
+      display:grid;
+      gap:16px;
+    }
+
+    .two-up,
+    .three-up,
+    .journey-grid,
+    .footer-grid{
+      display:grid;
+      gap:16px;
+    }
+
+    .two-up{grid-template-columns:repeat(2,1fr)}
+    .three-up{grid-template-columns:repeat(3,1fr)}
+    .journey-grid{grid-template-columns:1.1fr .9fr}
+    .footer-grid{grid-template-columns:repeat(3,1fr)}
+
+    .lane{
+      padding:18px;
+      border:1px dashed var(--line-strong);
+      border-radius:22px;
+      background:linear-gradient(180deg,#fff,#f8f8f4);
+    }
+
+    .lane h3{
+      margin:0 0 10px;
+      font-size:16px;
+      letter-spacing:-.02em;
+    }
+
+    .lane p,
+    .lane li{
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.6;
+    }
+
+    .lane ul{
+      margin:0;
+      padding-left:18px;
+      display:grid;
+      gap:8px;
+    }
+
+    .funnel{
+      display:grid;
+      gap:10px;
+      margin-top:10px;
+    }
+
+    .funnel div{
+      padding:14px 16px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:#fff;
+      font-size:14px;
+    }
+
+    .funnel div:nth-child(1){width:100%}
+    .funnel div:nth-child(2){width:88%}
+    .funnel div:nth-child(3){width:76%}
+    .funnel div:nth-child(4){width:64%}
+
+    .flow-list{
+      display:grid;
+      gap:12px;
+    }
+
+    .flow-step{
+      display:grid;
+      grid-template-columns:44px 1fr;
+      gap:14px;
+      align-items:flex-start;
+      padding:14px;
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:#fff;
+    }
+
+    .flow-step .num{
+      width:44px;
+      height:44px;
+      border-radius:14px;
+      border:1px solid var(--line-strong);
+      display:grid;
+      place-items:center;
+      font-weight:700;
+      background:#f5f5ee;
+    }
+
+    .faq-item{
+      padding:16px 18px;
+      border-radius:18px;
+      border:1px solid var(--line);
+      background:#fff;
+    }
+
+    .faq-item strong{
+      display:block;
+      margin-bottom:8px;
+      font-size:15px;
+    }
+
+    .footer-callout{
+      margin-top:8px;
+      padding:22px;
+      border-radius:26px;
+      border:1px solid var(--line-strong);
+      background:linear-gradient(180deg, rgba(17,17,17,.98), rgba(40,40,36,.96));
+      color:#fff;
+    }
+
+    .footer-callout h2{
+      margin:0 0 12px;
+      font-size:30px;
+      letter-spacing:-.04em;
+      max-width:14ch;
+    }
+
+    .footer-callout p{
+      max-width:62ch;
+      color:rgba(255,255,255,.75);
+      line-height:1.7;
+      margin:0 0 18px;
+    }
+
+    .footer-callout .ghost-chip{
+      color:#fff;
+      border-color:rgba(255,255,255,.2);
+      background:rgba(255,255,255,.06);
+    }
+
+    .legend{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:18px;
+    }
+
+    .legend span{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      font-size:12px;
+      color:var(--muted);
+      padding:8px 10px;
+      border-radius:999px;
+      background:#f9f9f5;
+      border:1px solid var(--line);
+    }
+
+    .legend span::before{
+      content:"";
+      width:10px;
+      height:10px;
+      border-radius:999px;
+      background:#151515;
+      opacity:.18;
+    }
+
+    @media (max-width: 1080px){
+      .hero,
+      .section,
+      .journey-grid,
+      .proof-band,
+      .two-up,
+      .three-up,
+      .footer-grid{
+        grid-template-columns:1fr;
+      }
+
+      .note{
+        position:relative;
+        top:auto;
+      }
+
+      .hero-copy h1{
+        max-width:none;
+      }
+    }
+
+    @media (max-width: 760px){
+      .page{
+        width:min(calc(100% - 18px), var(--max));
+        padding-top:18px;
+      }
+
+      .topbar{
+        border-radius:24px;
+        padding:16px;
+        align-items:flex-start;
+        flex-direction:column;
+      }
+
+      .panel,
+      .note{
+        padding:18px;
+      }
+
+      .floating-brand-layer span{
+        font-size:10px;
+        padding:6px 9px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="floating-brand-layer" aria-hidden="true">
+    <span style="top:4%; left:3%; animation-duration:17s;">build by buzzlemax</span>
+    <span style="top:12%; right:5%; animation-duration:19s;">build by buzzlemax</span>
+    <span style="top:23%; left:12%; animation-duration:15s;">build by buzzlemax</span>
+    <span style="top:31%; right:15%; animation-duration:18s;">build by buzzlemax</span>
+    <span style="top:44%; left:4%; animation-duration:16s;">build by buzzlemax</span>
+    <span style="top:52%; right:6%; animation-duration:20s;">build by buzzlemax</span>
+    <span style="top:61%; left:16%; animation-duration:14s;">build by buzzlemax</span>
+    <span style="top:71%; right:18%; animation-duration:17s;">build by buzzlemax</span>
+    <span style="top:82%; left:6%; animation-duration:19s;">build by buzzlemax</span>
+    <span style="top:88%; right:8%; animation-duration:16s;">build by buzzlemax</span>
+  </div>
+
+  <main class="page">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">BM</div>
+        <div class="brand-copy">
+          <strong>BuzzleMax × Jijo Joseph</strong>
+          <span>Wireframe blueprint for a high-converting NYC real estate SEO landing page with an integrated AI Property Booking Assistant.</span>
+        </div>
+      </div>
+      <nav class="nav" aria-label="Wireframe navigation">
+        <div class="chip">Fast hero</div>
+        <div class="chip">Trust signals</div>
+        <div class="chip">AI booking flow</div>
+        <div class="chip">Developer-ready</div>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <article class="panel hero-copy">
+        <div class="eyebrow">
+          <strong>Above-the-fold system</strong>
+          <span>Primary goal: convert NYC real estate teams into strategy-call bookings while showcasing AI tour-booking capability.</span>
+        </div>
+        <h1>SEO for NYC Real Estate That Books More Qualified Tours.</h1>
+        <p>
+          This layout positions Jijo Joseph as the premium growth advisor for brokerages, developers, and luxury agents. The page architecture keeps messaging direct, prioritizes trust, and moves visitors quickly from search intent to booked consultation or live assistant interaction.
+        </p>
+        <div class="cta-row">
+          <button class="btn">Primary CTA: Book a Strategy Call</button>
+          <button class="btn secondary">Secondary CTA: Watch AI Booking Demo</button>
+        </div>
+        <div class="micro-proof">
+          <div class="ghost-chip">Audience: NYC brokerages, teams, developers</div>
+          <div class="ghost-chip">Offer: SEO + local authority + conversion systems</div>
+          <div class="ghost-chip">Differentiator: AI assistant qualifies and schedules</div>
+        </div>
+      </article>
+
+      <aside class="panel wire-stack">
+        <div class="assistant-shell">
+          <div class="assistant-top">
+            <div class="assistant-title">AI Property Booking Assistant</div>
+            <div class="status">Live chat placement</div>
+          </div>
+          <div class="chat-bubble">
+            Visitor intent: "Show me two-bedroom options in Williamsburg under $1.8M this week."
+          </div>
+          <div class="chat-bubble agent">
+            Assistant response: surfaces matching inventory, asks qualification questions, offers available viewing slots, and routes hot leads to the sales calendar.
+          </div>
+          <div class="assistant-actions">
+            <div class="mini-card">Quick button: Browse by neighborhood</div>
+            <div class="mini-card">Quick button: Book a virtual tour</div>
+            <div class="mini-card">Quick button: Speak with an agent</div>
+          </div>
+          <div class="input-box">Chat input area + calendar trigger + CRM handoff event.</div>
+        </div>
+        <div class="wire-card">
+          <strong>Hero content stack</strong>
+          <p>
+            Keep the copy in three short bands only: market authority, measurable business outcome, and frictionless booking. Use one proof strip under the CTA instead of a long paragraph so the page stays fast and immediately scannable.
+          </p>
+        </div>
+      </aside>
+    </section>
+
+    <section class="proof-band">
+      <div class="wire-card">
+        <strong>Trust bar</strong>
+        <p>Use real proof only: featured publications, brokerage logos, compliance-safe credentials, or named vertical expertise.</p>
+      </div>
+      <div class="wire-card">
+        <strong>Intent match</strong>
+        <p>Explicitly mention SEO for luxury listings, local map visibility, branded authority, and lead capture optimization.</p>
+      </div>
+      <div class="wire-card">
+        <strong>Speed rule</strong>
+        <p>Above-the-fold must load with minimal script weight. Defer non-critical motion and keep the assistant lightweight.</p>
+      </div>
+      <div class="wire-card">
+        <strong>Conversion rule</strong>
+        <p>Every scroll segment should expose either a CTA, a proof artifact, or a next-step interaction.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <aside class="note">
+        <div class="eyebrow">
+          <strong>Section blueprint</strong>
+          <span>Why this section exists</span>
+        </div>
+        <h2>Offer positioning</h2>
+        <p>
+          The page should explain what Jijo Joseph does for real estate brands without drifting into generic agency language. Keep the message premium, local, and outcome-led.
+        </p>
+        <ul>
+          <li>Lead with NYC relevance and local search authority.</li>
+          <li>Show how SEO and AI booking work together.</li>
+          <li>Use concise modules that can ship fast in a GitHub repo.</li>
+        </ul>
+      </aside>
+
+      <div class="content-grid">
+        <div class="two-up">
+          <div class="lane">
+            <h3>Left module: Who this is for</h3>
+            <ul>
+              <li>Luxury broker teams</li>
+              <li>New development marketing teams</li>
+              <li>Independent NYC real estate advisors</li>
+              <li>Property groups that need higher lead quality, not just more traffic</li>
+            </ul>
+          </div>
+          <div class="lane">
+            <h3>Right module: Core promise</h3>
+            <ul>
+              <li>Rank for high-intent real estate searches</li>
+              <li>Convert search visits into qualified property inquiries</li>
+              <li>Let AI handle instant responses and booking logistics</li>
+              <li>Reduce lead leakage outside business hours</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="lane">
+          <h3>Recommended copy hierarchy</h3>
+          <div class="funnel">
+            <div>1. Premium value headline with NYC real estate specificity</div>
+            <div>2. One supporting line about search growth + booking efficiency</div>
+            <div>3. Primary CTA with immediate consultation intent</div>
+            <div>4. Secondary CTA tied to the AI assistant demo</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <aside class="note">
+        <div class="eyebrow">
+          <strong>Experience layer</strong>
+          <span>Interaction design</span>
+        </div>
+        <h2>AI booking journey</h2>
+        <p>
+          This is the signature differentiator. The assistant should feel like a concierge, not a generic chatbot.
+        </p>
+        <ul>
+          <li>Keep the chat entry visible but not intrusive.</li>
+          <li>Offer fast-pick prompts tied to buying and touring intent.</li>
+          <li>Push qualified leads into a booking or sales workflow.</li>
+        </ul>
+      </aside>
+
+      <div class="content-grid">
+        <div class="journey-grid">
+          <div class="lane">
+            <h3>User flow map</h3>
+            <div class="flow-list">
+              <div class="flow-step">
+                <div class="num">01</div>
+                <div>
+                  <strong>Traffic arrives from search</strong>
+                  <div class="muted">Visitor lands on a page tightly matched to neighborhood, property type, or transaction intent.</div>
+                </div>
+              </div>
+              <div class="flow-step">
+                <div class="num">02</div>
+                <div>
+                  <strong>Page establishes authority</strong>
+                  <div class="muted">Headline, proof strip, and case module confirm that the service is built for NYC real estate performance.</div>
+                </div>
+              </div>
+              <div class="flow-step">
+                <div class="num">03</div>
+                <div>
+                  <strong>Assistant captures momentum</strong>
+                  <div class="muted">AI assistant answers instantly, narrows needs, and offers booking options without sending the visitor elsewhere.</div>
+                </div>
+              </div>
+              <div class="flow-step">
+                <div class="num">04</div>
+                <div>
+                  <strong>Booking or lead routing</strong>
+                  <div class="muted">Hot leads move into a strategy call, property tour, or CRM handoff depending on page goal.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="lane">
+            <h3>Assistant UI requirements</h3>
+            <ul>
+              <li>Collapsible floating launcher in bottom-right on mobile and desktop</li>
+              <li>Preloaded prompts for budget, neighborhood, property type, and viewing timeframe</li>
+              <li>Calendar widget for instant booking confirmation</li>
+              <li>Escalation path to human agent or consultant</li>
+              <li>CRM event tags: qualified lead, viewing requested, strategy call requested</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <aside class="note">
+        <div class="eyebrow">
+          <strong>Trust architecture</strong>
+          <span>Proof without fluff</span>
+        </div>
+        <h2>Proof and credibility</h2>
+        <p>
+          Avoid fake numbers, generic testimonials, or synthetic brand marks. Every proof module should either be real or clearly labeled as a content slot for later insertion.
+        </p>
+        <ul>
+          <li>Case-study slot with real outcomes only</li>
+          <li>Short biography panel for Jijo Joseph</li>
+          <li>Vertical crossover mention: law firms, real estate, restaurants</li>
+        </ul>
+      </aside>
+
+      <div class="content-grid">
+        <div class="three-up">
+          <div class="lane">
+            <h3>Case study slot</h3>
+            <p>Reserve a visual card for one verified NYC real estate result. Until a real case is approved, keep the card labeled as a proof module, not with invented performance numbers.</p>
+          </div>
+          <div class="lane">
+            <h3>Founder authority slot</h3>
+            <p>Show Jijo Joseph with a concise positioning statement: premium SEO consultant helping NYC law firms, real estate brands, and restaurants dominate local demand.</p>
+          </div>
+          <div class="lane">
+            <h3>Process snapshot</h3>
+            <p>Use a compact process strip: audit, local SEO architecture, content clusters, conversion optimization, AI booking integration, monthly reporting.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <aside class="note">
+        <div class="eyebrow">
+          <strong>Deployment logic</strong>
+          <span>Rapid GitHub readiness</span>
+        </div>
+        <h2>Build system</h2>
+        <p>
+          This blueprint is intentionally modular. A dev can ship it as plain HTML/CSS first, then split components into React, Next.js, Astro, or another stack without changing the information architecture.
+        </p>
+        <ul>
+          <li>Keep the first release static and fast.</li>
+          <li>Add the booking assistant via isolated script mount.</li>
+          <li>Use semantic sections for clean repo handoff.</li>
+        </ul>
+      </aside>
+
+      <div class="content-grid">
+        <div class="two-up">
+          <div class="lane">
+            <h3>Recommended repo structure</h3>
+            <ul>
+              <li><code>index.html</code> for the landing page shell</li>
+              <li><code>styles.css</code> for layout tokens and components</li>
+              <li><code>assistant.js</code> for the AI booking launcher and chat state</li>
+              <li><code>assets/</code> for approved logos, portraits, and icons</li>
+            </ul>
+          </div>
+          <div class="lane">
+            <h3>Performance guardrails</h3>
+            <ul>
+              <li>Prefer system or self-hosted fonts with minimal weight variants</li>
+              <li>Lazy-load any video or heavy media below the fold</li>
+              <li>Defer analytics until after meaningful paint</li>
+              <li>Load assistant enhancements after main CTA is interactive</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="two-up">
+          <div class="lane">
+            <h3>SEO module stack</h3>
+            <ul>
+              <li>Hero headline aligned to transactional real estate intent</li>
+              <li>Location-rich metadata and neighborhood landing variants</li>
+              <li>Structured data for local business and service pages</li>
+              <li>Internal links to borough, service, and property-type pages</li>
+            </ul>
+          </div>
+          <div class="lane">
+            <h3>Conversion module stack</h3>
+            <ul>
+              <li>Persistent CTA in header and footer</li>
+              <li>Embedded assistant card above the fold</li>
+              <li>One lean proof band before the first scroll break</li>
+              <li>Short FAQ that removes booking hesitation</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <aside class="note">
+        <div class="eyebrow">
+          <strong>Bottom-of-page logic</strong>
+          <span>Final conversion push</span>
+        </div>
+        <h2>Close the page cleanly</h2>
+        <p>
+          The bottom should answer objections, restate the outcome, and present one final frictionless booking path.
+        </p>
+        <ul>
+          <li>Keep FAQ compact and specific.</li>
+          <li>Repeat the AI booking assistant entry point.</li>
+          <li>End with one strong CTA instead of multiple competing buttons.</li>
+        </ul>
+      </aside>
+
+      <div class="content-grid">
+        <div class="two-up">
+          <div class="faq-item">
+            <strong>FAQ: Why combine SEO with an AI booking assistant?</strong>
+            <div class="muted">Because search visibility without instant response creates drop-off. The assistant converts urgent interest into scheduled action.</div>
+          </div>
+          <div class="faq-item">
+            <strong>FAQ: What should be measured first?</strong>
+            <div class="muted">Track qualified conversations, booked calls or tours, and assisted conversions before chasing raw traffic volume.</div>
+          </div>
+          <div class="faq-item">
+            <strong>FAQ: Can this page be reused for other verticals?</strong>
+            <div class="muted">Yes. The architecture can be adapted for law firms and restaurants by swapping the proof modules and assistant prompts.</div>
+          </div>
+          <div class="faq-item">
+            <strong>FAQ: What content must be real before launch?</strong>
+            <div class="muted">Biography, approved proof, brand assets, compliance notes, calendar destination, and actual booking workflow details.</div>
+          </div>
+        </div>
+
+        <div class="footer-callout">
+          <div class="eyebrow">
+            <strong>Final CTA zone</strong>
+            <span>High-intent visitors should never have to search for the next step.</span>
+          </div>
+          <h2>Make the page feel premium, immediate, and impossible to ignore.</h2>
+          <p>
+            The conversion finish should pair a strong CTA with a lightweight assistant entry point: one path for decision-ready teams and one for visitors who want to test the AI experience before booking.
+          </p>
+          <div class="cta-row">
+            <button class="btn">Book Jijo Joseph Strategy Call</button>
+            <div class="ghost-chip">Secondary micro-link: Open AI booking assistant</div>
+          </div>
+          <div class="legend">
+            <span>Sticky CTA support</span>
+            <span>Assistant launcher support</span>
+            <span>Real proof only</span>
+            <span>GitHub-friendly section split</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="footer-grid">
+      <div class="wire-card">
+        <strong>Adapts to law firms</strong>
+        <p>Swap property-tour prompts for consultation booking, intake qualification, and practice-area routing.</p>
+      </div>
+      <div class="wire-card">
+        <strong>Adapts to restaurants</strong>
+        <p>Swap listing discovery for reservation handling, event inquiries, and high-intent local search conversion.</p>
+      </div>
+      <div class="wire-card">
+        <strong>Core brand note</strong>
+        <p>Keep the tone minimal, premium, and serious. The experience should feel expensive without relying on visual clutter.</p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
