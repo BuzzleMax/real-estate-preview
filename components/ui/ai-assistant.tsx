@@ -17,14 +17,12 @@ const defaultResponses = [
 function getAIResponse(input: string): string {
   const lower = input.toLowerCase();
 
-  // Check for exact matches in our curated responses
   for (const [key, response] of Object.entries(aiResponses)) {
     if (lower.includes(key)) {
       return response;
     }
   }
 
-  // Intelligent fallback responses based on keywords
   if (lower.includes("hello") || lower.includes("hi") || lower.includes("hey")) {
     return "Hello! I'm your AI Property Concierge. How can I help you find your dream property today? You can ask me about luxury homes, apartments, investment properties, or specific neighborhoods.";
   }
@@ -38,23 +36,22 @@ function getAIResponse(input: string): string {
   }
 
   if (lower.includes("price") || lower.includes("cost") || lower.includes("budget") || lower.includes("afford")) {
-    return "Our portfolio spans from $1M to $25M+. Here's a quick overview:\n\n• $1M-$3M: Luxury studios and one-bedrooms in prime locations\n• $3M-$5M: Spacious two-bedrooms with premium amenities\n• $5M-$10M: Three-bedroom residences in full-service buildings\n• $10M-$20M: Penthouse suites and townhouses\n• $20M+: Trophy properties and estates\n\nWhat price range are you exploring?";
+    return "Our portfolio spans from $1M to $25M+. Here's a quick overview:\n\n\u2022 $1M-$3M: Luxury studios and one-bedrooms in prime locations\n\u2022 $3M-$5M: Spacious two-bedrooms with premium amenities\n\u2022 $5M-$10M: Three-bedroom residences in full-service buildings\n\u2022 $10M-$20M: Penthouse suites and townhouses\n\u2022 $20M+: Trophy properties and estates\n\nWhat price range are you exploring?";
   }
 
   if (lower.includes("buy") || lower.includes("purchase") || lower.includes("process")) {
-    return "The buying process at BuzzleMax is designed to be seamless:\n\n1. **Consultation** - We learn your preferences, timeline, and requirements\n2. **Curation** - Receive a personally selected shortlist of properties\n3. **Private Viewings** - In-person or virtual tours at your convenience\n4. **Negotiation** - Expert guidance through pricing and terms\n5. **Closing** - Coordinated support through final signatures\n\nThe entire process typically takes 45-60 days for qualified buyers. Would you like to schedule a consultation?";
+    return "The buying process at BuzzleMax is designed to be seamless:\n\n1. Consultation - We learn your preferences, timeline, and requirements\n2. Curation - Receive a personally selected shortlist of properties\n3. Private Viewings - In-person or virtual tours at your convenience\n4. Negotiation - Expert guidance through pricing and terms\n5. Closing - Coordinated support through final signatures\n\nThe entire process typically takes 45-60 days for qualified buyers. Would you like to schedule a consultation?";
   }
 
   if (lower.includes("invest") || lower.includes("roi") || lower.includes("return")) {
-    return "Investment properties in NYC have shown strong resilience. Our investment team can help you identify:\n\n• High-yield rental properties with 4-6% cap rates\n• Fix-and-flip opportunities in emerging neighborhoods\n• Development projects with significant upside potential\n• 1031 exchange properties for tax deferment\n\nI can arrange a consultation with our investment advisory team for a detailed market analysis. Shall I do that?";
+    return "Investment properties in NYC have shown strong resilience. Our investment team can help you identify:\n\n\u2022 High-yield rental properties with 4-6% cap rates\n\u2022 Fix-and-flip opportunities in emerging neighborhoods\n\u2022 Development projects with significant upside potential\n\u2022 1031 exchange properties for tax deferment\n\nI can arrange a consultation with our investment advisory team for a detailed market analysis. Shall I do that?";
   }
 
   if (lower.includes("thank")) {
     return "You're most welcome! It's my pleasure to assist you. If you have any more questions about properties, neighborhoods, or the buying process, don't hesitate to ask. I'm here 24/7 to help you find your dream home.";
   }
 
-  // Default intelligent response
-  return "Thank you for your inquiry. I'd be happy to help you with that. Could you provide a bit more detail so I can give you the most relevant information? For example, you can ask me about:\n\n• **Luxury homes** - Browse our premium collection\n• **Apartments** - Find the perfect urban residence\n• **Investment properties** - Explore ROI opportunities\n• **Neighborhoods** - Learn about different areas\n• **Buying process** - Understand how it works\n• **Mortgage basics** - Get financing guidance";
+  return "Thank you for your inquiry. I'd be happy to help you with that. Could you provide a bit more detail so I can give you the most relevant information? For example, you can ask me about:\n\n\u2022 Luxury homes - Browse our premium collection\n\u2022 Apartments - Find the perfect urban residence\n\u2022 Investment properties - Explore ROI opportunities\n\u2022 Neighborhoods - Learn about different areas\n\u2022 Buying process - Understand how it works\n\u2022 Mortgage basics - Get financing guidance";
 }
 
 export function AIAssistant() {
@@ -90,7 +87,6 @@ export function AIAssistant() {
     setInput("");
     setIsTyping(true);
 
-    // Simulate thinking delay for natural feel
     await new Promise((resolve) => setTimeout(resolve, 800 + Math.random() * 1200));
 
     const response = getAIResponse(text);
@@ -104,7 +100,6 @@ export function AIAssistant() {
 
   return (
     <>
-      {/* Floating Chat Button */}
       <motion.button
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
@@ -126,11 +121,9 @@ export function AIAssistant() {
             <path d="M16 10h.01" strokeWidth="2.5" />
           </svg>
         )}
-        {/* Pulse ring */}
         <span className="absolute inset-0 rounded-full bg-plum/30 animate-ping-slow" />
       </motion.button>
 
-      {/* Chat Window */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -138,10 +131,9 @@ export function AIAssistant() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="fixed bottom-24 right-4 z-[60] w-[calc(100vw-32px)] max-w-[420px] sm:bottom-28 sm:right-8"
+            className="fixed bottom-24 right-4 z-[60] w-[calc(100vw-32px)] max-w-[420px] max-h-[70vh] overflow-y-auto sm:bottom-28 sm:right-8 sm:max-h-[600px]"
           >
-            <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-b from-white/10 to-white/[0.04] shadow-2xl backdrop-blur-2xl">
-              {/* Header */}
+            <div className="rounded-[2rem] border border-white/10 bg-gradient-to-b from-white/10 to-white/[0.04] shadow-2xl backdrop-blur-2xl">
               <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
                 <div className="flex items-center gap-3">
                   <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-royal to-plum">
@@ -166,8 +158,7 @@ export function AIAssistant() {
                 </button>
               </div>
 
-              {/* Messages */}
-              <div className="h-[400px] overflow-y-auto px-5 py-4 space-y-4 scrollbar-thin">
+              <div className="px-5 py-4 space-y-4">
                 {messages.map((msg, i) => (
                   <motion.div
                     key={i}
@@ -184,15 +175,7 @@ export function AIAssistant() {
                       }`}
                     >
                       {msg.content.split("\n").map((line, j) => (
-                        <p key={j} className={j > 0 ? "mt-2" : ""}>
-                          {line.startsWith("•") || line.startsWith("1.") || line.startsWith("2.") || line.startsWith("3.") || line.startsWith("4.") || line.startsWith("5.") ? (
-                            <span className="text-emerald">{line}</span>
-                          ) : line.startsWith("**") && line.endsWith("**") ? (
-                            <strong className="text-text">{line.replace(/\*\*/g, "")}</strong>
-                          ) : (
-                            line
-                          )}
-                        </p>
+                        <p key={j} className={j > 0 ? "mt-2" : ""}>{line}</p>
                       ))}
                     </div>
                   </motion.div>
@@ -204,20 +187,19 @@ export function AIAssistant() {
                     animate={{ opacity: 1 }}
                     className="flex justify-start"
                   >
-                    <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
-                      <div className="flex gap-1.5">
-                        <span className="h-2 w-2 rounded-full bg-muted/50 animate-bounce" style={{ animationDelay: "0ms" }} />
-                        <span className="h-2 w-2 rounded-full bg-muted/50 animate-bounce" style={{ animationDelay: "150ms" }} />
-                        <span className="h-2 w-2 rounded-full bg-muted/50 animate-bounce" style={{ animationDelay: "300ms" }} />
+                      <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+                        <div className="flex gap-1.5">
+                          <span className="h-2 w-2 rounded-full bg-muted/50 animate-bounce" style={{ animationDelay: "0ms" }} />
+                          <span className="h-2 w-2 rounded-full bg-muted/50 animate-bounce" style={{ animationDelay: "150ms" }} />
+                          <span className="h-2 w-2 rounded-full bg-muted/50 animate-bounce" style={{ animationDelay: "300ms" }} />
+                        </div>
                       </div>
-                    </div>
-                  </motion.div>
+                    </motion.div>
                 )}
 
                 <div ref={messagesEndRef} />
               </div>
 
-              {/* Suggestions */}
               {messages.length <= 2 && (
                 <div className="px-5 pb-3">
                   <div className="flex flex-wrap gap-2">
@@ -234,7 +216,6 @@ export function AIAssistant() {
                 </div>
               )}
 
-              {/* Input */}
               <div className="border-t border-white/10 p-4">
                 <form
                   onSubmit={(e) => {

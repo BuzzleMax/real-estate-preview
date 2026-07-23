@@ -127,7 +127,7 @@ export function Navbar() {
           </div>
 
           {/* CTA + Hamburger */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             <a
               href="#contact"
               className="hidden rounded-full bg-gradient-to-r from-royal via-plum to-emerald px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.16em] text-white shadow-lg shadow-plum/20 transition-all duration-300 hover:shadow-xl hover:shadow-plum/30 hover:scale-[1.02] sm:inline-flex"
